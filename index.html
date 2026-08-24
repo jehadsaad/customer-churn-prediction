@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Churn Prediction</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select {
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .button-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        button {
+            padding: 13px 35px;
+            border: none;
+            border-radius: 8px;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result h2 {
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        .high {
+            background: #ffe5e5;
+            border: 1px solid #ffaaaa;
+        }
+
+        .medium {
+            background: #fff4d6;
+            border: 1px solid #ffd36a;
+        }
+
+        .low {
+            background: #e5f7e9;
+            border: 1px solid #9cdaa8;
+        }
+
+        .error {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ffe5e5;
+            color: #b00020;
+            border-radius: 8px;
+            display: none;
+        }
+
+        @media (max-width: 700px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>Customer Churn Prediction</h1>
+
+    <p class="subtitle">
+        Predict whether a customer is likely to churn
+    </p>
+
+
+    <form id="predictionForm">
+
+        <div class="form-grid">
+
+
+            <!-- Senior Citizen -->
+
+            <div class="form-group">
+
+                <label for="SeniorCitizen">
+                    Senior Citizen
+                </label>
+
+                <select id="SeniorCitizen" required>
+
+                    <option value="0">
+                        No
+                    </option>
+
+                    <option value="1">
+                        Yes
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Partner -->
+
+            <div class="form-group">
+
+                <label for="Partner">
+                    Partner
+                </label>
+
+                <select id="Partner" required>
+
+                    <option value="Yes">
+                        Yes
+                    </option>
+
+                    <option value="No">
+                        No
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Dependents -->
+
+            <div class="form-group">
+
+                <label for="Dependents">
+                    Dependents
+                </label>
+
+                <select id="Dependents" required>
+
+                    <option value="Yes">
+                        Yes
+                    </option>
+
+                    <option value="No">
+                        No
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Tenure -->
+
+            <div class="form-group">
+
+                <label for="tenure">
+                    Tenure (Months)
+                </label>
+
+                <input
+                    type="number"
+                    id="tenure"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Internet Service -->
+
+            <div class="form-group">
+
+                <label for="InternetService">
+                    Internet Service
+                </label>
+
+                <select id="InternetService" required>
+
+                    <option value="DSL">
+                        DSL
+                    </option>
+
+                    <option value="Fiber optic">
+                        Fiber optic
+                    </option>
+
+                    <option value="No">
+                        No
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Online Security -->
+
+            <div class="form-group">
+
+                <label for="OnlineSecurity">
+                    Online Security
+                </label>
+
+                <select id="OnlineSecurity" required>
+
+                    <option value="Yes">
+                        Yes
+                    </option>
+
+                    <option value="No">
+                        No
+                    </option>
+
+                    <option value="No internet service">
+                        No internet service
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Online Backup -->
+
+            <div class="form-group">
+
+                <label for="OnlineBackup">
+                    Online Backup
+                </label>
+
+                <select id="OnlineBackup" required>
+
+                    <option value="Yes">
+                        Yes
+                    </option>
+
+                    <option value="No">
+                        No
+                    </option>
+
+                    <option value="No internet service">
+                        No internet service
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Device Protection -->
+
+            <div class="form-group">
+
+                <label for="DeviceProtection">
+                    Device Protection
+                </label>
+
+                <select id="DeviceProtection" required>
+
+                    <option value="Yes">
+                        Yes
+                    </option>
+
+                    <option value="No">
+                        No
+                    </option>
+
+                    <option value="No internet service">
+                        No internet service
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Tech Support -->
+
+            <div class="form-group">
+
+                <label for="TechSupport">
+                    Tech Support
+                </label>
+
+                <select id="TechSupport" required>
+
+                    <option value="Yes">
+                        Yes
+                    </option>
+
+                    <option value="No">
+                        No
+                    </option>
+
+                    <option value="No internet service">
+                        No internet service
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Streaming TV -->
+
+            <div class="form-group">
+
+                <label for="StreamingTV">
+                    Streaming TV
+                </label>
+
+                <select id="StreamingTV" required>
+
+                    <option value="Yes">
+                        Yes
+                    </option>
+
+                    <option value="No">
+                        No
+                    </option>
+
+                    <option value="No internet service">
+                        No internet service
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Streaming Movies -->
+
+            <div class="form-group">
+
+                <label for="StreamingMovies">
+                    Streaming Movies
+                </label>
+
+                <select id="StreamingMovies" required>
+
+                    <option value="Yes">
+                        Yes
+                    </option>
+
+                    <option value="No">
+                        No
+                    </option>
+
+                    <option value="No internet service">
+                        No internet service
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Contract -->
+
+            <div class="form-group">
+
+                <label for="Contract">
+                    Contract
+                </label>
+
+                <select id="Contract" required>
+
+                    <option value="Month-to-month">
+                        Month-to-month
+                    </option>
+
+                    <option value="One year">
+                        One year
+                    </option>
+
+                    <option value="Two year">
+                        Two year
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Paperless Billing -->
+
+            <div class="form-group">
+
+                <label for="PaperlessBilling">
+                    Paperless Billing
+                </label>
+
+                <select id="PaperlessBilling" required>
+
+                    <option value="Yes">
+                        Yes
+                    </option>
+
+                    <option value="No">
+                        No
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Payment Method -->
+
+            <div class="form-group">
+
+                <label for="PaymentMethod">
+                    Payment Method
+                </label>
+
+                <select id="PaymentMethod" required>
+
+                    <option value="Electronic check">
+                        Electronic check
+                    </option>
+
+                    <option value="Mailed check">
+                        Mailed check
+                    </option>
+
+                    <option value="Bank transfer (automatic)">
+                        Bank transfer (automatic)
+                    </option>
+
+                    <option value="Credit card (automatic)">
+                        Credit card (automatic)
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Monthly Charges -->
+
+            <div class="form-group">
+
+                <label for="MonthlyCharges">
+                    Monthly Charges
+                </label>
+
+                <input
+                    type="number"
+                    id="MonthlyCharges"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Total Charges -->
+
+            <div class="form-group">
+
+                <label for="TotalCharges">
+                    Total Charges
+                </label>
+
+                <input
+                    type="number"
+                    id="TotalCharges"
+                    step="0.01"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="button-container">
+
+            <button
+                type="submit"
+                id="predictButton"
+            >
+                Predict Churn
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <!-- Error -->
+
+    <div
+        id="errorMessage"
+        class="error"
+    ></div>
+
+
+    <!-- Result -->
+
+    <div
+        id="result"
+        class="result"
+    >
+
+        <h2>Prediction Result</h2>
+
+        <div class="result-item">
+            <strong>Prediction:</strong>
+            <span id="prediction"></span>
+        </div>
+
+        <div class="result-item">
+            <strong>Churn Probability:</strong>
+            <span id="probability"></span>
+        </div>
+
+        <div class="result-item">
+            <strong>Risk Level:</strong>
+            <span id="riskLevel"></span>
+        </div>
+
+        <div class="result-item">
+            <strong>Result:</strong>
+            <span id="resultText"></span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const form = document.getElementById("predictionForm");
+
+const button = document.getElementById("predictButton");
+
+const resultBox = document.getElementById("result");
+
+const errorBox = document.getElementById("errorMessage");
+
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+
+    // Hide previous messages
+
+    resultBox.style.display = "none";
+
+    errorBox.style.display = "none";
+
+
+    // Disable button
+
+    button.disabled = true;
+
+    button.textContent = "Predicting...";
+
+
+    try {
+
+
+        // ================================================
+        // Create JSON Object
+        // ================================================
+
+        const customerData = {
+
+            SeniorCitizen:
+                parseInt(
+                    document.getElementById("SeniorCitizen").value
+                ),
+
+            Partner:
+                document.getElementById("Partner").value,
+
+            Dependents:
+                document.getElementById("Dependents").value,
+
+            tenure:
+                parseInt(
+                    document.getElementById("tenure").value
+                ),
+
+            InternetService:
+                document.getElementById("InternetService").value,
+
+            OnlineSecurity:
+                document.getElementById("OnlineSecurity").value,
+
+            OnlineBackup:
+                document.getElementById("OnlineBackup").value,
+
+            DeviceProtection:
+                document.getElementById("DeviceProtection").value,
+
+            TechSupport:
+                document.getElementById("TechSupport").value,
+
+            StreamingTV:
+                document.getElementById("StreamingTV").value,
+
+            StreamingMovies:
+                document.getElementById("StreamingMovies").value,
+
+            Contract:
+                document.getElementById("Contract").value,
+
+            PaperlessBilling:
+                document.getElementById("PaperlessBilling").value,
+
+            PaymentMethod:
+                document.getElementById("PaymentMethod").value,
+
+            MonthlyCharges:
+                parseFloat(
+                    document.getElementById("MonthlyCharges").value
+                ),
+
+            TotalCharges:
+                parseFloat(
+                    document.getElementById("TotalCharges").value
+                )
+        };
+
+
+        // ================================================
+        // Send Request to FastAPI
+        // ================================================
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/predict",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(customerData)
+            }
+        );
+
+
+        // ================================================
+        // Read Response
+        // ================================================
+
+        const data = await response.json();
+
+
+        // ================================================
+        // Handle Error
+        // ================================================
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail || "Prediction failed"
+            );
+        }
+
+
+        // ================================================
+        // Display Result
+        // ================================================
+
+        document.getElementById("prediction").textContent =
+            data.prediction === 1
+                ? "Likely to Churn"
+                : "Unlikely to Churn";
+
+
+        document.getElementById("probability").textContent =
+            data.churn_percentage;
+
+
+        document.getElementById("riskLevel").textContent =
+            data.risk_level;
+
+
+        document.getElementById("resultText").textContent =
+            data.result;
+
+
+        // ================================================
+        // Risk Level Styling
+        // ================================================
+
+        resultBox.className = "result";
+
+        if (data.risk_level === "High") {
+
+            resultBox.classList.add("high");
+
+        } else if (data.risk_level === "Medium") {
+
+            resultBox.classList.add("medium");
+
+        } else {
+
+            resultBox.classList.add("low");
+
+        }
+
+
+        resultBox.style.display = "block";
+
+
+    } catch (error) {
+
+
+        errorBox.textContent =
+            "Error: " + error.message;
+
+        errorBox.style.display = "block";
+
+
+    } finally {
+
+
+        button.disabled = false;
+
+        button.textContent = "Predict Churn";
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+{
+    "model_type": "XGBClassifier",
+    "model_file": "best_xgb_model.json",
+    "preprocessor_file": "preprocessor.pkl",
+    "feature_info_file": "feature_info.json",
+    "target": "Churn",
+    "prediction_type": "binary_classification",
+    "classes": {
+        "0": "No Churn",
+        "1": "Churn"
+    }
+}

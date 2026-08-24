@@ -1,0 +1,72 @@
+{
+    "target_column": "Churn",
+    "target_classes": {
+        "No": 0,
+        "Yes": 1
+    },
+    "input_features": [
+        "SeniorCitizen",
+        "Partner",
+        "Dependents",
+        "tenure",
+        "InternetService",
+        "OnlineSecurity",
+        "OnlineBackup",
+        "DeviceProtection",
+        "TechSupport",
+        "StreamingTV",
+        "StreamingMovies",
+        "Contract",
+        "PaperlessBilling",
+        "PaymentMethod",
+        "MonthlyCharges",
+        "TotalCharges"
+    ],
+    "categorical_features": [
+        "InternetService",
+        "Contract",
+        "PaymentMethod"
+    ],
+    "numerical_features": [
+        "SeniorCitizen",
+        "Partner",
+        "Dependents",
+        "tenure",
+        "OnlineSecurity",
+        "OnlineBackup",
+        "DeviceProtection",
+        "TechSupport",
+        "StreamingTV",
+        "StreamingMovies",
+        "PaperlessBilling",
+        "MonthlyCharges",
+        "TotalCharges"
+    ],
+    "processed_features": [
+        "cat__InternetService_DSL",
+        "cat__InternetService_Fiber optic",
+        "cat__InternetService_No",
+        "cat__Contract_Month-to-month",
+        "cat__Contract_One year",
+        "cat__Contract_Two year",
+        "cat__PaymentMethod_Bank transfer (automatic)",
+        "cat__PaymentMethod_Credit card (automatic)",
+        "cat__PaymentMethod_Electronic check",
+        "cat__PaymentMethod_Mailed check",
+        "remainder__SeniorCitizen",
+        "remainder__Partner",
+        "remainder__Dependents",
+        "remainder__tenure",
+        "remainder__OnlineSecurity",
+        "remainder__OnlineBackup",
+        "remainder__DeviceProtection",
+        "remainder__TechSupport",
+        "remainder__StreamingTV",
+        "remainder__StreamingMovies",
+        "remainder__PaperlessBilling",
+        "remainder__MonthlyCharges",
+        "remainder__TotalCharges"
+    ],
+    "number_of_input_features": 16,
+    "number_of_processed_features": 23
+}
