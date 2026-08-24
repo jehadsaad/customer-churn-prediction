@@ -1,52 +1,38 @@
-﻿# 🚀 Customer Churn Prediction
+# Customer Churn Prediction
 
-### End-to-End Machine Learning & API Deployment Project
-
-> A production-oriented Customer Churn Prediction system that combines Machine Learning, XGBoost, preprocessing pipelines, FastAPI, and an interactive web interface to predict customer churn and estimate churn risk.
+> An end-to-end Machine Learning project that predicts customer churn using XGBoost and deploys the trained model through a FastAPI REST API with an interactive web interface.
 
 ---
 
-## 📌 Project Overview
+## 📌 Overview
 
-Customer churn is one of the most important challenges faced by subscription-based companies.
+Customer churn is a common problem for subscription-based businesses.
 
-When a customer leaves a service, the company does not only lose the current revenue, but may also lose future revenue and the opportunity to build a long-term relationship with that customer.
+The goal of this project is to build a machine learning system that can predict whether a customer is likely to leave the service based on their demographic information, subscribed services, contract details, and billing information.
 
-This project aims to build a complete system that can:
-
-- Analyze customer behavior
-- Identify patterns associated with churn
-- Train a machine learning classification model
-- Predict the probability of customer churn
-- Estimate the customer's risk level
-- Expose the trained model through a REST API
-- Provide a simple web interface for making predictions
-
-The project was designed with deployment and future MLOps integration in mind.
-
----
-
-# 🎯 Problem Statement
-
-The main objective is to answer:
-
-> **"Is this customer likely to churn?"**
-
-The system receives customer information such as:
-
-- Demographics
-- Tenure
-- Internet services
-- Security services
-- Contract type
-- Payment method
-- Monthly charges
-- Total charges
-
-and produces:
+The project covers the complete workflow:
 
 ```text
+Data
+ ↓
+Data Cleaning
+ ↓
+Exploratory Data Analysis
+ ↓
+Feature Engineering
+ ↓
+Preprocessing
+ ↓
+Model Training
+ ↓
+Model Evaluation
+ ↓
+Model Selection
+ ↓
+Model Saving
+ ↓
+FastAPI Deployment
+ ↓
+Web Interface
+ ↓
 Prediction
-Churn Probability
-Risk Level
-Final Result
